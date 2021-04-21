@@ -11,7 +11,7 @@ import (
 	"github.com/rokiyama/gqlgen-todos/graph/generated"
 )
 
-const defaultPort = "8080"
+const defaultPort = "18080"
 
 func main() {
 	port := os.Getenv("PORT")
