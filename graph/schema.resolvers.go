@@ -6,10 +6,13 @@ package graph
 import (
 	"context"
 	"fmt"
+	"log"
 	"math/rand"
 
 	"github.com/rokiyama/gqlgen-todos/graph/generated"
 	"github.com/rokiyama/gqlgen-todos/graph/model"
+	"google.golang.org/protobuf/types/known/anypb"
+	"google.golang.org/protobuf/types/known/structpb"
 )
 
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
@@ -23,6 +26,15 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 }
 
 func (r *queryResolver) Todos(ctx context.Context, criteria interface{}) ([]*model.Todo, error) {
+	pbValue, err := structpb.NewValue(criteria)
+	if err != nil {
+		return nil, err
+	}
+	pbAny, err := anypb.New(pbValue)
+	if err != nil {
+		return nil, err
+	}
+	log.Printf("criteria: %#v", pbAny)
 	return r.todos, nil
 }
 
