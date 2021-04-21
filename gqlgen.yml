@@ -56,4 +56,4 @@ models:
       - github.com/99designs/gqlgen/graphql.Int32
   Any:
     model:
-      - google.golang.org/protobuf/types/known/anypb.Any
+      - github.com/rokiyama/gqlgen-todos/graph/model.Any

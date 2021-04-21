@@ -50,7 +50,7 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		Todos func(childComplexity int, criteria anypb.Any) int
+		Todos func(childComplexity int, criteria *anypb.Any) int
 	}
 
 	Todo struct {
@@ -70,7 +70,7 @@ type MutationResolver interface {
 	CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error)
 }
 type QueryResolver interface {
-	Todos(ctx context.Context, criteria anypb.Any) ([]*model.Todo, error)
+	Todos(ctx context.Context, criteria *anypb.Any) ([]*model.Todo, error)
 }
 type TodoResolver interface {
 	User(ctx context.Context, obj *model.Todo) (*model.User, error)
@@ -113,7 +113,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Todos(childComplexity, args["criteria"].(anypb.Any)), true
+		return e.complexity.Query.Todos(childComplexity, args["criteria"].(*anypb.Any)), true
 
 	case "Todo.done":
 		if e.complexity.Todo.Done == nil {
@@ -239,7 +239,7 @@ type User {
 }
 
 type Query {
-  todos(criteria: Any!): [Todo!]!
+  todos(criteria: Any): [Todo!]!
 }
 
 input NewTodo {
@@ -291,10 +291,10 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 func (ec *executionContext) field_Query_todos_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 anypb.Any
+	var arg0 *anypb.Any
 	if tmp, ok := rawArgs["criteria"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("criteria"))
-		arg0, err = ec.unmarshalNAny2googleᚗgolangᚗorgᚋprotobufᚋtypesᚋknownᚋanypbᚐAny(ctx, tmp)
+		arg0, err = ec.unmarshalOAny2ᚖgoogleᚗgolangᚗorgᚋprotobufᚋtypesᚋknownᚋanypbᚐAny(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -408,7 +408,7 @@ func (ec *executionContext) _Query_todos(ctx context.Context, field graphql.Coll
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Todos(rctx, args["criteria"].(anypb.Any))
+		return ec.resolvers.Query().Todos(rctx, args["criteria"].(*anypb.Any))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2232,15 +2232,6 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) unmarshalNAny2googleᚗgolangᚗorgᚋprotobufᚋtypesᚋknownᚋanypbᚐAny(ctx context.Context, v interface{}) (anypb.Any, error) {
-	res, err := ec.unmarshalInputAny(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNAny2googleᚗgolangᚗorgᚋprotobufᚋtypesᚋknownᚋanypbᚐAny(ctx context.Context, sel ast.SelectionSet, v anypb.Any) graphql.Marshaler {
-	return ec._Any(ctx, sel, &v)
-}
-
 func (ec *executionContext) unmarshalNBoolean2bool(ctx context.Context, v interface{}) (bool, error) {
 	res, err := graphql.UnmarshalBoolean(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -2583,6 +2574,21 @@ func (ec *executionContext) marshalN__TypeKind2string(ctx context.Context, sel a
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) unmarshalOAny2ᚖgoogleᚗgolangᚗorgᚋprotobufᚋtypesᚋknownᚋanypbᚐAny(ctx context.Context, v interface{}) (*anypb.Any, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := model.UnmarshalAny(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOAny2ᚖgoogleᚗgolangᚗorgᚋprotobufᚋtypesᚋknownᚋanypbᚐAny(ctx context.Context, sel ast.SelectionSet, v *anypb.Any) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return model.MarshalAny(v)
 }
 
 func (ec *executionContext) unmarshalOBoolean2bool(ctx context.Context, v interface{}) (bool, error) {
