@@ -1,6 +1,7 @@
 # GraphQL schema example
 #
 # https://gqlgen.com/getting-started/
+scalar Any
 
 type Todo {
   id: ID!
@@ -15,7 +16,7 @@ type User {
 }
 
 type Query {
-  todos: [Todo!]!
+  todos(criteria: Any!): [Todo!]!
 }
 
 input NewTodo {
