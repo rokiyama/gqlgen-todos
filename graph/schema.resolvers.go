@@ -25,7 +25,7 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 	return todo, nil
 }
 
-func (r *queryResolver) Todos(ctx context.Context, criteria interface{}) ([]*model.Todo, error) {
+func (r *queryResolver) Todos(ctx context.Context, criteria anypb.Any) ([]*model.Todo, error) {
 	pbValue, err := structpb.NewValue(criteria)
 	if err != nil {
 		return nil, err
