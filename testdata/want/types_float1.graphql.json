@@ -1,0 +1,9 @@
+{
+  "data": {
+    "test": {
+      "typeUrl": "type.googleapis.com/google.protobuf.DoubleValue",
+      "value": "1.100000",
+      "valueType": "*wrapperspb.DoubleValue"
+    }
+  }
+}

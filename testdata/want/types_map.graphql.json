@@ -1,0 +1,9 @@
+{
+  "data": {
+    "test": {
+      "typeUrl": "type.googleapis.com/google.protobuf.Struct",
+      "value": "{\"key\":\"value\"}",
+      "valueType": "*structpb.Struct"
+    }
+  }
+}

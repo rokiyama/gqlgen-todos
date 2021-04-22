@@ -1,0 +1,7 @@
+{
+  test (criteria: 5e-324) {
+    typeUrl
+    value
+    valueType
+  }
+}

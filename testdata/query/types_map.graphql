@@ -1,0 +1,7 @@
+{
+  test (criteria: { key: value }) {
+    typeUrl
+    value
+    valueType
+  }
+}

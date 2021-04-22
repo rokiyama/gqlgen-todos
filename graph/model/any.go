@@ -32,31 +32,32 @@ func MarshalAny(a *anypb.Any) graphql.Marshaler {
 
 func UnmarshalAny(v interface{}) (*anypb.Any, error) {
 	var m proto.Message
+	log.Printf("%T", v)
 	switch v := v.(type) {
 	case nil:
 		return nil, nil
 	case bool:
 		m = wrapperspb.Bool(v)
-	case int:
-		m = wrapperspb.Int64(int64(v))
-	case int32:
-		m = wrapperspb.Int32(v)
+	// case int:
+	// 	m = wrapperspb.Int64(int64(v))
+	// case int32:
+	// 	m = wrapperspb.Int32(v)
 	case int64:
 		m = wrapperspb.Int64(v)
-	case uint:
-		m = wrapperspb.Int64(int64(v))
-	case uint32:
-		m = wrapperspb.Int64(int64(v))
-	case uint64:
-		m = wrapperspb.Int64(int64(v))
-	case float32:
-		m = wrapperspb.Float(v)
+	// case uint:
+	// 	m = wrapperspb.Int64(int64(v))
+	// case uint32:
+	// 	m = wrapperspb.Int64(int64(v))
+	// case uint64:
+	// 	m = wrapperspb.Int64(int64(v))
+	// case float32:
+	// 	m = wrapperspb.Float(v)
 	case float64:
 		m = wrapperspb.Double(v)
 	case string:
 		m = wrapperspb.String(v)
-	case []byte:
-		m = wrapperspb.Bytes(v)
+	// case []byte:
+	// 	m = wrapperspb.Bytes(v)
 	case map[string]interface{}:
 		s, err := structpb.NewStruct(v)
 		if err != nil {

@@ -1,0 +1,7 @@
+{
+  test (criteria: 0.0)  {
+    typeUrl
+    value
+    valueType
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "data": {
+    "test": {
+      "typeUrl": "type.googleapis.com/google.protobuf.Int64Value",
+      "value": "1",
+      "valueType": "*wrapperspb.Int64Value"
+    }
+  }
+}

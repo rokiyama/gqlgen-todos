@@ -1,6 +1,7 @@
 package model_test
 
 import (
+	"math"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -36,43 +37,43 @@ func TestUnmarshalAny(t *testing.T) {
 			},
 			wantErr: false,
 		}, {
-			name:  "bytes",
-			value: []byte("test"),
-			want: &anypb.Any{
-				TypeUrl: "type.googleapis.com/google.protobuf.BytesValue",
-				Value:   marshal(t, wrapperspb.Bytes([]byte("test"))),
-			},
-			wantErr: false,
+			name:    "bytes",
+			value:   []byte("test"),
+			wantErr: true,
 		}, {
-			name:  "int32",
-			value: 2147483647,
-			want: &anypb.Any{
-				TypeUrl: "type.googleapis.com/google.protobuf.Int64Value",
-				Value:   marshal(t, wrapperspb.Int32(2147483647)),
-			},
-			wantErr: false,
+			name:    "int",
+			value:   math.MaxInt32,
+			wantErr: true,
+		}, {
+			name:    "int32",
+			value:   int32(math.MaxInt32),
+			wantErr: true,
 		}, {
 			name:  "int64",
-			value: 2147483648,
+			value: int64(math.MaxInt64),
 			want: &anypb.Any{
 				TypeUrl: "type.googleapis.com/google.protobuf.Int64Value",
-				Value:   marshal(t, wrapperspb.Int64(2147483648)),
+				Value:   marshal(t, wrapperspb.Int64(math.MaxInt64)),
 			},
 			wantErr: false,
 		}, {
 			name:  "float",
-			value: float32(1.234),
+			value: math.MaxFloat32,
 			want: &anypb.Any{
-				TypeUrl: "type.googleapis.com/google.protobuf.FloatValue",
-				Value:   marshal(t, wrapperspb.Float(1.234)),
+				TypeUrl: "type.googleapis.com/google.protobuf.DoubleValue",
+				Value:   marshal(t, wrapperspb.Double(math.MaxFloat32)),
 			},
 			wantErr: false,
 		}, {
-			name:  "double",
-			value: 1.234e56,
+			name:    "float32",
+			value:   float32(math.MaxFloat32),
+			wantErr: true,
+		}, {
+			name:  "float64",
+			value: float64(math.MaxFloat64),
 			want: &anypb.Any{
 				TypeUrl: "type.googleapis.com/google.protobuf.DoubleValue",
-				Value:   marshal(t, wrapperspb.Double(1.234e56)),
+				Value:   marshal(t, wrapperspb.Double(math.MaxFloat64)),
 			},
 			wantErr: false,
 		}, {

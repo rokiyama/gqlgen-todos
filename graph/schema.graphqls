@@ -3,27 +3,12 @@
 # https://gqlgen.com/getting-started/
 scalar Any
 
-type Todo {
-  id: ID!
-  text: String!
-  done: Boolean!
-  user: User!
-}
-
-type User {
-  id: ID!
-  name: String!
-}
-
 type Query {
-  todos(criteria: Any): [Todo!]!
+  test(criteria: Any): Result!
 }
 
-input NewTodo {
-  text: String!
-  userId: String!
-}
-
-type Mutation {
-  createTodo(input: NewTodo!): Todo!
+type Result {
+  typeUrl: String!
+  value: String!
+  valueType: String!
 }
