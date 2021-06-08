@@ -28,8 +28,9 @@ func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 	return r.todos, nil
 }
 
-func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, error) {
-	log.Printf("Getting user: id=%s", obj.UserID)
+func (r *todoResolver) User(ctx context.Context, obj *model.Todo, aggregate *model.Aggregate) (*model.User, error) {
+	log.Printf("Getting user: id=%s aggregate=%#v", obj.UserID, aggregate)
+	// TODO: implement aggregate
 	thunk := r.Loader.Load(ctx, dataloader.StringKey(obj.UserID))
 	result, err := thunk()
 	if err != nil {

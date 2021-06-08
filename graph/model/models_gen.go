@@ -2,6 +2,10 @@
 
 package model
 
+type Aggregate struct {
+	Count string `json:"count"`
+}
+
 type NewTodo struct {
 	Text   string `json:"text"`
 	UserID string `json:"userId"`
