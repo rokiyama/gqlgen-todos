@@ -9,7 +9,7 @@ import (
 	"log"
 	"math/rand"
 
-	"github.com/rokiyama/gqlgen-todos/graph/database"
+	"github.com/graph-gophers/dataloader"
 	"github.com/rokiyama/gqlgen-todos/graph/generated"
 	"github.com/rokiyama/gqlgen-todos/graph/model"
 )
@@ -30,14 +30,17 @@ func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 
 func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, error) {
 	log.Printf("Getting user: id=%s", obj.UserID)
-	users, err := database.GetUsers(obj.UserID)
+	thunk := r.Loader.Load(ctx, dataloader.StringKey(obj.UserID))
+	result, err := thunk()
 	if err != nil {
 		return nil, err
 	}
-	if len(users) < 1 {
-		return nil, nil
+	log.Printf("Got user: %#v", result)
+	if res, ok := result.(*model.User); !ok {
+		return nil, fmt.Errorf("not users")
+	} else {
+		return res, nil
 	}
-	return users[0], nil
 }
 
 // Mutation returns generated.MutationResolver implementation.

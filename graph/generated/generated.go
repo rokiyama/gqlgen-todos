@@ -242,7 +242,8 @@ input NewTodo {
 
 type Mutation {
   createTodo(input: NewTodo!): Todo!
-}`, BuiltIn: false},
+}
+`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
 
