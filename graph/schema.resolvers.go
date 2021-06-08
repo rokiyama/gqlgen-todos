@@ -6,8 +6,10 @@ package graph
 import (
 	"context"
 	"fmt"
+	"log"
 	"math/rand"
 
+	"github.com/rokiyama/gqlgen-todos/graph/database"
 	"github.com/rokiyama/gqlgen-todos/graph/generated"
 	"github.com/rokiyama/gqlgen-todos/graph/model"
 )
@@ -27,7 +29,15 @@ func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 }
 
 func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, error) {
-	return &model.User{ID: obj.UserID, Name: "user " + obj.UserID}, nil
+	log.Printf("Getting user: id=%s", obj.UserID)
+	users, err := database.GetUsers(obj.UserID)
+	if err != nil {
+		return nil, err
+	}
+	if len(users) < 1 {
+		return nil, nil
+	}
+	return users[0], nil
 }
 
 // Mutation returns generated.MutationResolver implementation.
